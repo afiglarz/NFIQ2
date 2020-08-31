@@ -51,11 +51,11 @@ namespace NFIQ2UI
    */
   struct Flags
   {
-    /** Verbose Flag value */
+    /** Verbose Flag value - adds individual feature quality score to output */
     bool verbose{false};
     /** Debug Flag value */
     bool debug{false};
-    /** Speed Flag value */
+    /** Speed Flag value - adds individual quality score speeds to output */
     bool speed{false};
     /** Force Flag value */
     bool force{false};
