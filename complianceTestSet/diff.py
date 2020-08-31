@@ -60,36 +60,11 @@ def diff_func(csv1, csv2, outputDir, tf):
 if __name__ == '__main__':
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument("-o", type = str, help="Diff output")
 	parser.add_argument("-s", action='store_true', help="Indicates whether the files are the same")
-	parser.add_argument("bitness", type = str, help="Indicate the platform of the build")
+	parser.add_argument("nfiq2dir", type = str, help="Provide the path of the NFIQ2 binary")
 	args = parser.parse_args()
 
-	if args.bitness != "Win32" and args.bitness != "x64":
-		print("Please provide a valid platform: 'Win32' or 'x64'")
-		sys.exit(1)
-
-	os_type = platform.system()
-
-  #Change dir to location of testing images
 	image_dir = "images/"
 
-	if os_type == "Darwin":
-		subprocess.run(["./../dist/NFIQ2/build/bin/nfiq2", "-v", "-o", "output.AppleClang.apple64.csv", image_dir])
-		sys.exit(diff_func("result.AppleClang.apple64.csv", "result.AppleClang.apple64.csv", "diffoutput.csv", args.s))
-
-	elif os_type == "Linux":
-		subprocess.run(["./../dist/NFIQ2/build/bin/nfiq2", "-v", "-o", "output.gnu.linux64.csv", image_dir])
-		sys.exit(diff_func("output.gnu.linux64.csv", "result.gnu.linux64.csv", "diffoutput.csv", args.s))
-
-	elif os_type == "Windows" and args.bitness == "x64":
-		subprocess.run([".\\..\\dist\\NFIQ2\\build\\bin\\nfiq2", "-v", "-o", "output.msvc.win64.csv", image_dir])
-		sys.exit(diff_func("output.msvc.win64.csv", "result.msvc.win64.csv", "diffoutput.csv", args.s))
-
-	elif os_type == "Windows" and args.bitness == "Win32":
-		subprocess.run([".\\..\\dist\\NFIQ2\\build\\bin\\nfiq2", "-v", "-o", "output.msvc.win32.csv", image_dir])
-		sys.exit(diff_func("output.msvc.win32.csv", "result.msvc.win32.csv", "diffoutput.csv", args.s))
-
-	else:
-		print("Error Detecting OS and/or Platform")
-		sys.exit(1)
+	subprocess.run([args.builddir, "-v", "-o", "output.master.csv", image_dir])
+	sys.exit(diff_func("output.master.csv", "result.master.csv", "diffoutput.csv", args.s))
