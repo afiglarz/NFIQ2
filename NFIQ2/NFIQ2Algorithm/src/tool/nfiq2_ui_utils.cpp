@@ -287,10 +287,10 @@ void NFIQ2UI::printUsage()
             "RecordStore processes"
             << "\n";
   std::cout
-      << "-v: Shows Additional Verbose information about each processed image"
+      << "-v: Shows Additional Individual Feature Values about each processed image"
       << "\n";
   std::cout
-      << "-q: Shows Additional Speed information about each processed image"
+      << "-q: Shows Additional Individual Speed Values about each processed image"
       << "\n";
   std::cout
       << "-d: Shows Additional Debug information as each score gets computed"

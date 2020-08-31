@@ -37,7 +37,7 @@ OPTIONS
 > Indicates the number of worker _threads_ that will be spawned when running batch or Record Store operations. This number may exceed the number of physical cores on a user's system; however, a warning will appear asking if the user would like to proceed or change the number of _threads_ to equal the number of physical cores. One additional thread will be spawed for coordinating output.
 
 | **-v**
-> Verbose output. Provides additional feature information pertaining to each measurement of NFIQ2.
+> Verbose output. Provides additional individual feature value information pertaining to each measurement of NFIQ2.
 
 | **-q**
 > Speed. Provides additional speed information pertaining to the amount of time each measurement of NFIQ2 took to compute.
