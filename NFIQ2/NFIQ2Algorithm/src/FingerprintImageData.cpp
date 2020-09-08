@@ -1,5 +1,4 @@
 #include "include/FingerprintImageData.h"
-#include "wsq.h"
 
 int debug = 0;
 
