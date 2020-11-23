@@ -107,10 +107,6 @@ std::list<NFIQ::QualityFeatureResult> FJFXMinutiaeQualityFeature::computeFeature
     struct finger_view_minutiae_record** fvmrs = NULL;
     fvmrs = ( struct finger_view_minutiae_record** ) malloc( rcount *
             sizeof( struct finger_view_minutiae_record* ) );
-
-    //print_fmr(stdout, fmr);
-    //write_fmr(stdout, fmr);
-
     if( get_fvmrs( fmr, fvmrs ) != rcount )
     {
       if( fvmrs )

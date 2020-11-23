@@ -4,6 +4,7 @@
 #include <string.h>
 #include <iomanip>
 #include <list>
+#include <cfenv>
 
 #include "include/NFIQException.h"
 #include "include/Timer.hpp"
@@ -21,6 +22,8 @@
 #include "FDAFeature.h"
 
 #include "NFIQ2AlgorithmImpl.h"
+
+#pragma STDC FENV_ACCESS ON
 
 #define QUALITY_SCORE_NOT_AVAILABLE 255
 
@@ -42,6 +45,9 @@ NFIQ2Algorithm::Impl::Impl()
 #if defined(__linux) && defined(__i386__)
   set_fpu( 0x27F ); /* use double-precision rounding */
 #endif
+
+  fesetround(FE_TONEAREST);
+
   // init RF module that takes some time to load the parameters
   this->m_parameterHash = m_RandomForestML.initModule();
 }
@@ -52,6 +58,9 @@ NFIQ2Algorithm::Impl::Impl( const std::string& fileName, const std::string& file
 #if defined(__linux) && defined(__i386__)
   set_fpu( 0x27F ); /* use double-precision rounding */
 #endif
+
+  fesetround(FE_TONEAREST);
+  
   // init RF module that takes some time to load the parameters
   this->m_parameterHash = m_RandomForestML.initModule( fileName, fileHash );
 }
