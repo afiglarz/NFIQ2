@@ -32,6 +32,8 @@ find_package(OpenCV REQUIRED NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH HINTS ${Ope
 set(OpenCV_SHARED ON)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
+include_directories("${SUPERBUILD_ROOT_PATH}/NFIR/include")
+
 set(SOURCE_FILES "")
 file( GLOB SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/nfiq2/*.cpp" )
 file( GLOB FEATURES_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/features/*.cpp" )

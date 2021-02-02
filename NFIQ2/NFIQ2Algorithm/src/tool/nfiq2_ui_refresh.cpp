@@ -28,6 +28,8 @@
 #include <nfiq2/tool/nfiq2_ui_threadedlog.h>
 #include <nfiq2/tool/nfiq2_ui_types.h>
 #include <nfiq2/tool/nfiq2_ui_utils.h>
+#include <resample_down.h>
+#include <resample_up.h>
 
 #include <cmath>
 #include <cstdio>
@@ -127,6 +129,13 @@ NFIQ2UI::executeSingle(std::shared_ptr<BE::Image::Image> img,
 
 			/* Re-sample Image Code here
 			 */
+			if (imageDPI < 500) {
+				// upsample
+
+			} else {
+				// downsample
+
+			}
 
 		} else {
 			if (interactive && !flags.force) {
@@ -143,6 +152,14 @@ NFIQ2UI::executeSingle(std::shared_ptr<BE::Image::Image> img,
 
 					/* FIXME: Re-sample Image Code here
 					 */
+					if (imageDPI < 500) {
+						// upsample
+						NFIR::Upsample resample{}; 
+
+					} else {
+						// downsample
+				
+					}
 
 					logger->debugMsg(
 					    "User approved the re-sample");
