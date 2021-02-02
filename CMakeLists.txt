@@ -173,6 +173,8 @@ ExternalProject_Add(nfir
 	CMAKE_ARGS
 		-DCMAKE_INSTALL_PREFIX=${INSTALL_STAGING_DIR}
 		${MULTI_CONFIG_ARGS}
+	#PATCH_COMMAND patch -p1 < ${CMAKE_CURRENT_SOURCE_DIR}/nfir_nfiq2.patch
+	BUILD_ALWAYS	YES
 )
 ExternalProject_Add_StepDependencies(nfir build OpenCV)
 

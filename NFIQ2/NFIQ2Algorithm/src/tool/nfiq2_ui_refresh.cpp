@@ -28,8 +28,7 @@
 #include <nfiq2/tool/nfiq2_ui_threadedlog.h>
 #include <nfiq2/tool/nfiq2_ui_types.h>
 #include <nfiq2/tool/nfiq2_ui_utils.h>
-#include <resample_down.h>
-#include <resample_up.h>
+#include <nfir_lib.h>
 
 #include <cmath>
 #include <cstdio>
@@ -60,6 +59,9 @@ NFIQ2UI::executeSingle(std::shared_ptr<BE::Image::Image> img,
 	// Indicate whether it was quantized or re-sampled
 	bool quantized = false;
 	bool resampled = false;
+
+	const std::string interpolationMethod = "bicubic";
+	const std::string filterShape = "ideal";
 
 	// Starting Checks for Image: 8 bit color and depth
 	const uint16_t bitDepth = img->getBitDepth();
@@ -129,14 +131,20 @@ NFIQ2UI::executeSingle(std::shared_ptr<BE::Image::Image> img,
 
 			/* Re-sample Image Code here
 			 */
-			if (imageDPI < 500) {
-				// upsample
+			
+			uint8_t* source = img->getRawGrayscaleData(8);
+			uint8_t* target;
 
-			} else {
-				// downsample
+			uint32_t imageWidth = img->getDimensions().xSize;
+			uint32_t imageHeight = img->getDimensions().ySize;
 
+			try {
+				NFIR::resample(source, target, imageDPI, 500, interpolationMethod, filterShape, imageWidth, imageHeight);
+			} catch (const std::runtime_error &e) {
+				logger->printError(name, fingerPosition, 255, e.what(), quantized, resampled);
+				return;
 			}
-
+		
 		} else {
 			if (interactive && !flags.force) {
 				const std::string prompt =
@@ -152,14 +160,18 @@ NFIQ2UI::executeSingle(std::shared_ptr<BE::Image::Image> img,
 
 					/* FIXME: Re-sample Image Code here
 					 */
-					if (imageDPI < 500) {
-						// upsample
-						NFIR::Upsample resample{}; 
+						uint8_t* source = img->getRawGrayscaleData(8);
+						uint8_t* target;
 
-					} else {
-						// downsample
-				
-					}
+						uint32_t imageWidth = img->getDimensions().xSize;
+						uint32_t imageHeight = img->getDimensions().ySize;
+
+						try {
+							NFIR::resample(source, target, imageDPI, 500, interpolationMethod, filterShape, imageWidth, imageHeight);
+						} catch (const std::runtime_error &e) {
+							logger->printError(name, fingerPosition, 255, e.what(), quantized, resampled);
+							return;
+						}
 
 					logger->debugMsg(
 					    "User approved the re-sample");
