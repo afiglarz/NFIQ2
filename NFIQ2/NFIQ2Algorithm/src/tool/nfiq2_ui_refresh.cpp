@@ -165,7 +165,7 @@ NFIQ2UI::executeSingle(std::shared_ptr<BE::Image::Image> img,
 			/* Re-sample Image Code here
 			 */
 			try {
-				NFIR::resample(grayscaleRawData, target,
+				NFIR::resample(grayscaleRawData, &target,
 				    imageDPI, 500, interpolationMethod,
 				    filterShape, &imageWidth, &imageHeight);
 			} catch (const std::runtime_error &e) {
@@ -194,7 +194,7 @@ NFIQ2UI::executeSingle(std::shared_ptr<BE::Image::Image> img,
 					 */
 					try {
 						NFIR::resample(grayscaleRawData,
-						    target, imageDPI, 500,
+						    &target, imageDPI, 500,
 						    interpolationMethod,
 						    filterShape, &imageWidth,
 						    &imageHeight);
@@ -231,18 +231,18 @@ NFIQ2UI::executeSingle(std::shared_ptr<BE::Image::Image> img,
 	// At this point - all images are 500PPI or have been converted to that
 	// resolution. Quantization will happen below if necessary.
 
-	std::cout << "Just before biomeval copy: width: " << imageWidth << "height: " << imageHeight << "\n";
+	// std::cout << "Just before biomeval copy: width: " << imageWidth << "height: " << imageHeight << "\n";
 
 	// std::cout << "\n";
 
-	// for (int i = 0; i < imageHeight * imageWidth + 10 ; i++) {
+	// for (int i = 0; i < imageHeight * imageWidth; i++) {
 	// 	printf("%d: %02x\n", i, target[i]);
 	// }
 
 	// std::cout << "\n";
 
 	BE::Memory::uint8Array test {};
-	test.copy(target, imageHeight * imageWidth - 1);
+	test.copy(target, imageHeight * imageWidth);
 	BE::IO::Utility::writeFile(test, "auto_array.pgm");
 
 	if (resampled) {
