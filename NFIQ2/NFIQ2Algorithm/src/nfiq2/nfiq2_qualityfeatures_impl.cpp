@@ -37,8 +37,8 @@ NFIQ::QualityFeatures::Impl::getActionableQualityFeedback(
 {
 	std::vector<NFIQ::ActionableQualityFeedback> actionableQuality {};
 
-	for (const auto feature : features) {
-		if (feature->getModuleName().compare("NFIQ2_Mu") == 0) {
+	for (const auto &feature : features) {
+		if (feature->getModuleName() == "NFIQ2_Mu") {
 			// Uniform and Contrast
 			const std::shared_ptr<MuFeature> muFeatureModule =
 			    std::dynamic_pointer_cast<MuFeature>(feature);
@@ -90,8 +90,7 @@ NFIQ::QualityFeatures::Impl::getActionableQualityFeedback(
 				return actionableQuality;
 			}
 
-		} else if (feature->getModuleName().compare(
-			       "NFIQ2_FingerJetFX") == 0) {
+		} else if (feature->getModuleName() == "NFIQ2_FingerJetFX") {
 			// Minutiae
 			const std::shared_ptr<FingerJetFXFeature>
 			    fjfxFeatureModule =
@@ -122,8 +121,7 @@ NFIQ::QualityFeatures::Impl::getActionableQualityFeedback(
 				}
 			}
 
-		} else if (feature->getModuleName().compare(
-			       "NFIQ2_ImgProcROI") == 0) {
+		} else if (feature->getModuleName() == "NFIQ2_ImgProcROI") {
 			// FP Foreground
 			const std::shared_ptr<ImgProcROIFeature>
 			    roiFeatureModule =
