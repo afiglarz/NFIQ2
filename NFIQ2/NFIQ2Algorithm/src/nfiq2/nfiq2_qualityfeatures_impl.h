@@ -1,6 +1,7 @@
 #ifndef NFIQ2_NFIQ2_QUALITYFEATURES_IMPL_H_
 #define NFIQ2_NFIQ2_QUALITYFEATURES_IMPL_H_
 
+#include <features/BaseFeature.h>
 #include <nfiq2_fingerprintimagedata.hpp>
 #include <nfiq2_qualityfeatures.hpp>
 
@@ -60,6 +61,13 @@ std::vector<NFIQ::QualityFeatureData> computeQualityFeatures(
     const NFIQ::FingerprintImageData &rawImage, bool bComputeActionableQuality,
     std::vector<NFIQ::ActionableQualityFeedback> &actionableQuality,
     bool bOutputSpeed, std::vector<NFIQ::QualityFeatureSpeed> &speedValues);
+
+std::vector<std::shared_ptr<NFIQ::QualityFeatures::BaseFeature>>
+computeQualityFeatureModules(const NFIQ::FingerprintImageData &rawImage);
+
+std::vector<NFIQ::ActionableQualityFeedback> extractActionableQualityFeedback(
+    const std::vector<std::shared_ptr<NFIQ::QualityFeatures::BaseFeature>>
+	&modules);
 }}}
 
 #endif
